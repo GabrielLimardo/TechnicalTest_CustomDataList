@@ -1,66 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Custom Data Lists Aplication
 
-## About Laravel
+A continuación, , relato como crearía el sistema solicitado:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### 1.Diseño de la Base de Datos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-Creacion de sistema de migraciones:
+```
+  Schema::create('custom_data_lists', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+```
+```
+ Schema::create('custom_data_columns', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('list_id');
+            $table->string('name');
+            $table->timestamps();
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+            $table->foreign('list_id')->references('id')->on('custom_data_lists')->onDelete('cascade');
+        });
+```
+```
+Schema::create('custom_data_rows', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('list_id');
+            $table->unsignedBigInteger('column_id');
+            $table->int('fila');
+            $table->text('value');
 
-## Learning Laravel
+            $table->timestamps();
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+            $table->foreign('list_id')->references('id')->on('custom_data_lists')->onDelete('cascade');
+            $table->foreign('column_id')->references('id')->on('custom_data_columns')->onDelete('cascade');
+        });
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-Creacion de modelos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+    protected $table = 'custom_data_lists';
 
-## Laravel Sponsors
+    protected $fillable = [
+       'name'
+    ];
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+    protected $table = 'custom_data_columns';
 
-### Premium Partners
+    protected $fillable = [
+        'list_id',
+        'data',
+    ];
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+```
+    protected $table = 'custom_data_row';
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    protected $fillable = [
+        'list_id',
+        'column_id',
+        'fila',
+        'value'
+    ];
+```
 
-## Code of Conduct
+#### 2.Creacion de CRUD 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+CRUD Operations:
 
-## Security Vulnerabilities
+Crear: Importar un archivo CSV para crear una nueva lista.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Leer: Obtener datos de una lista basados en criterios de búsqueda.
 
-## License
+Actualizar: Actualizar los datos de una lista existente. PROXIMO
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Eliminar: Eliminar una lista. PROXIMO
+
+-Creacion de rutas
+
+```
+Route::post('/upload-excel', [CustomDataUploadController::class, 'uploadExcel'])->name('upload.excel');
+Route::post('/search', [SearchController::class, 'search'])->name('search');
+```
+
+-Creacion de CustomDataUploadController
+
+```
+public function importCSV($filePath, $nombreLista) {
+    // Leer el archivo CSV y determinar con el nombre del archivo el tipo de lista en caso que ahi este el nombre
+    // Insertar datos en CustomLists
+    // Recorrer las columnas y almancer el nombre de las columnas en custom_data_columns y el valor en custom_data_row
+}
+
+```
+
+-Creacion de SearchController
+
+```
+public function search($request) {
+    // Creacion de un sistema que busque atraves de cualquiera de la listas y pueda obtener un resultado atraves de la fila obtenida
+}
+
+```
+
+## LEVANTAR EL PROYECTO:
+
+ Run `php artisan migrate`to create the necessary database tables.
+ Run `php artisan servee` to run the local server.
+
+ That's it! You should now be able to access the application at http://127.0.0.1:8000
+
+## DETALLES:
+
+Bueno aca describo algunos detalles a cambiar ya que el codigo hecho fue para contextualizar como funcionaria el sistema pero no reflaja el codigo final que haria para un deploy.
+
+1- Corregir el sistema de datos obtenidos actualmente con acentos no lo va a tomar y deberia mejorar el sistema validando el dato y cambiandolo en caso de que sea necesario o en caso contrario mostrar un mensaje de error.
+
+2- En las buquedas actualmente esta tomando unicamnte el primer dato de lista o columna obtenido cuando deberia tomar todas en caso que haya una repeticion en nombre de columna o lista.
+
+3- El sistema de importaciones esta usando while en este momento deberia usar un insert masivo porque actualmente por cada vez que pasa esta usando un insert cuando deberia ser un solo insert con un array de datos para insertar en la base de datos eso mejoraria la optimizacion del codigo
