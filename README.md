@@ -115,6 +115,8 @@ public function search($request) {
 
  That's it! You should now be able to access the application at http://127.0.0.1:8000
 
+![image](https://github.com/GabrielLimardo/TechnicalTest_CustomDataList/assets/60992367/e42c6e27-3bcd-4c1b-9228-8892eeb4b21e)
+
 ## DETALLES:
 
 Bueno aca describo algunos detalles a cambiar ya que el codigo hecho fue para contextualizar como funcionaria el sistema pero no reflaja el codigo final que haria para un deploy.
