@@ -10,9 +10,10 @@ class CreateCustomDataRowsTable extends Migration
     {
         Schema::create('custom_data_rows', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('list_id'); // Clave foránea a la tabla custom_data_lists.
-            $table->unsignedBigInteger('column_id'); // Clave foránea a la tabla custom_data_columns.
-            $table->text('value'); // Valor de la celda correspondiente.
+            $table->unsignedBigInteger('list_id');
+            $table->unsignedBigInteger('column_id');
+            $table->int('fila');
+            $table->text('value');
 
             $table->timestamps();
 

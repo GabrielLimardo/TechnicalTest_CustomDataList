@@ -9,15 +9,15 @@ class CustomDataRow extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['list_id', 'column_id', 'value'];
+    protected $fillable = ['list_id', 'column_id', 'fila', 'value'];
 
-    public function list()
+    public function customDataList()
     {
-        return $this->belongsTo(CustomDataList::class);
+        return $this->belongsTo(CustomDataList::class, 'list_id');
     }
 
-    public function column()
+    public function customDataColumn()
     {
-        return $this->belongsTo(CustomDataColumn::class);
+        return $this->belongsTo(CustomDataColumn::class, 'column_id');
     }
 }

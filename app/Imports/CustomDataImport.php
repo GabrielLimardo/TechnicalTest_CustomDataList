@@ -17,8 +17,9 @@ class CustomDataImport
             $list = CustomDataList::create([
                 'name' =>  $fileName,
             ]);
-
+            $fila = 0;
             while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                $fila++;
                 foreach ($headers as $index => $header) {
                     $column = CustomDataColumn::firstOrCreate([
                         'list_id' => $list->id,
@@ -29,6 +30,7 @@ class CustomDataImport
                     CustomDataRow::create([
                         'list_id' => $list->id,
                         'column_id' => $column->id,
+                        'fila' => $fila,
                         'value' => $data[$index],
                     ]);
                 }

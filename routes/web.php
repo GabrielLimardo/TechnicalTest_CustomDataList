@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomDataUploadController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::post('/upload-excel', [CustomDataUploadController::class, 'uploadExcel'])->name('upload.excel');
+Route::post('/search', [SearchController::class, 'search'])->name('search');
