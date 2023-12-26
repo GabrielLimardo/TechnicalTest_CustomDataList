@@ -12,7 +12,6 @@ class CreateCustomDataColumnsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('list_id');
             $table->string('name');
-            $table->string('data_type');
             $table->timestamps();
 
             $table->foreign('list_id')->references('id')->on('custom_data_lists')->onDelete('cascade');

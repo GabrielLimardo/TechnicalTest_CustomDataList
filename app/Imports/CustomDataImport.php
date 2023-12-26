@@ -23,8 +23,7 @@ class CustomDataImport
                 foreach ($headers as $index => $header) {
                     $column = CustomDataColumn::firstOrCreate([
                         'list_id' => $list->id,
-                        'name' => $header,
-                        'data_type' => 'string',
+                        'name' => $header
                     ]);
 
                     CustomDataRow::create([

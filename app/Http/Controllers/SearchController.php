@@ -20,7 +20,7 @@ class SearchController extends Controller
         $id_list = CustomDataList::where('name',$listName)->first()->id;
         $id_column = CustomDataColumn::where('name',$columnName)->first()->id;
         $fila = CustomDataRow::where('list_id',$id_list)->where('column_id',$id_column)->first()->fila;
-        $results = CustomDataRow::where('fila',$fila)->get();
+        $results = CustomDataRow::where('fila',$fila)->where('list_id',$id_list)->get();
 
         return view('search.results', compact('results'));
     }

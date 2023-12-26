@@ -9,7 +9,7 @@ class CustomDataColumn extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['list_id', 'name', 'data_type'];
+    protected $fillable = ['list_id', 'name'];
 
     public function list()
     {
