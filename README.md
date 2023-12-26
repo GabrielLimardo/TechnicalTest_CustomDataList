@@ -92,7 +92,7 @@ Route::post('/search', [SearchController::class, 'search'])->name('search');
 
 ```
 public function importCSV($filePath, $nombreLista) {
-    // Leer el archivo CSV y determinar con el nombre del archivo el tipo de lista en caso que ahi este el nombre
+    // Leer el archivo CSV y determinar con el nombre del archivo el tipo de lista en caso de que ahí este el nombre.
     // Insertar datos en CustomLists
     // Recorrer las columnas y almancer el nombre de las columnas en custom_data_columns y el valor en custom_data_row
 }
