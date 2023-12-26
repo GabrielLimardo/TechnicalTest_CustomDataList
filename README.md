@@ -119,10 +119,11 @@ public function search($request) {
 
 ## DETALLES:
 
-Bueno aca describo algunos detalles a cambiar ya que el codigo hecho fue para contextualizar como funcionaria el sistema pero no reflaja el codigo final que haria para un deploy.
+contextualizar como funcionaria el sistema, pero no refleja el código final que haría para un deploy.
 
-1- Corregir el sistema de datos obtenidos actualmente con acentos no lo va a tomar y deberia mejorar el sistema validando el dato y cambiandolo en caso de que sea necesario o en caso contrario mostrar un mensaje de error.
+1- Corregir el sistema de datos obtenidos actualmente con acentos no lo va a tomar y debería mejorar el sistema validando el dato y cambiándolo en caso de que sea necesario o en caso contrario mostrar un mensaje de error.
 
-2- En las buquedas actualmente esta tomando unicamnte el primer dato de lista o columna obtenido cuando deberia tomar todas en caso que haya una repeticion en nombre de columna o lista.
+2- En las búsquedas actualmente está tomando únicamente el primer dato de lista o columna obtenido cuando debería tomar todas en caso de que haya una repetición en nombre de columna o lista.
 
-3- El sistema de importaciones esta usando while en este momento deberia usar un insert masivo porque actualmente por cada vez que pasa esta usando un insert cuando deberia ser un solo insert con un array de datos para insertar en la base de datos eso mejoraria la optimizacion del codigo
+3- El sistema de importaciones está usando WHILE en este momento debería usar un INSERT masivo porque actualmente por cada vez que pasa está usando un INSERT cuando debería ser un solo INSERT con un array de datos para insertar en la base de datos eso mejoraría la optimización del código
+
