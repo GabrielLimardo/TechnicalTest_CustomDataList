@@ -1,7 +1,7 @@
 
 ## Custom Data Lists Aplication
 
-A continuación, , relato como crearía el sistema solicitado:
+A continuación, relato como crearía el sistema solicitado:
 
 #### 1.Diseño de la Base de Datos
 
