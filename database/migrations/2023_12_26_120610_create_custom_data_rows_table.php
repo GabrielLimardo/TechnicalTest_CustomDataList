@@ -12,7 +12,7 @@ class CreateCustomDataRowsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('list_id');
             $table->unsignedBigInteger('column_id');
-            $table->int('fila');
+            $table->integer('fila');
             $table->text('value');
 
             $table->timestamps();
